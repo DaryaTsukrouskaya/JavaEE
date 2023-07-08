@@ -17,11 +17,9 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("product.jsp");
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
         try {
-            Connection connection = connectionPool.getConnection();
-            req.setAttribute("product", CRUDUtils.getProductById(Integer.parseInt(req.getParameter("id")), connection));
-            req.setAttribute("productName", CRUDUtils.getProductById(Integer.parseInt(req.getParameter("id")), connection).getName());
+            req.setAttribute("product", CRUDUtils.getProductById(Integer.parseInt(req.getParameter("id"))));
+            req.setAttribute("productName", CRUDUtils.getProductById(Integer.parseInt(req.getParameter("id"))).getName());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

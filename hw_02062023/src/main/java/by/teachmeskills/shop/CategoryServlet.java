@@ -19,9 +19,7 @@ public class CategoryServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("category.jsp");
         req.setAttribute("categoryName", req.getParameter("name"));
         try {
-            ConnectionPool connectionPool = ConnectionPool.getInstance();
-            Connection connection = connectionPool.getConnection();
-            req.setAttribute("categoryProducts", CRUDUtils.getCategoryProducts(req.getParameter("name"), connection));
+            req.setAttribute("categoryProducts", CRUDUtils.getCategoryProducts(req.getParameter("name")));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

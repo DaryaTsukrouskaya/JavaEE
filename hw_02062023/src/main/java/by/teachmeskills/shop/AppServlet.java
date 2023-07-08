@@ -1,4 +1,5 @@
 package by.teachmeskills.shop;
+
 import by.teachmeskills.shop.model.User;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -30,17 +31,15 @@ public class AppServlet extends HttpServlet {
         String name = req.getParameter("username");
         String password = req.getParameter("password");
         if (name != null && password != null) {
-            ConnectionPool connectionPool = ConnectionPool.getInstance();
             try {
-                Connection connection = connectionPool.getConnection();
                 User user = null;
-                req.setAttribute("categories", CRUDUtils.getCategories(connection));
-                user = CRUDUtils.getUser(name, connection);
+                req.setAttribute("categories", CRUDUtils.getCategories());
+                user = CRUDUtils.getUser(name);
                 if (user != null && user.getPassword().equals(password)) {
                     req.getSession().setAttribute("user", user);
                 } else if (user == null) {
                     user = new User(name, password);
-                    CRUDUtils.createUser(user, connection);
+                    CRUDUtils.createUser(user);
                     req.getSession().setAttribute("user", user);
                 } else {
                     RequestDispatcher requestDispatcher = req.getRequestDispatcher("login.jsp");

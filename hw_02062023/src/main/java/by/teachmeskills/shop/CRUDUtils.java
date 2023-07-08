@@ -16,6 +16,17 @@ public class CRUDUtils {
     private CRUDUtils() {
 
     }
+    private static Connection connection;
+
+    static {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        try {
+            connection = connectionPool.getConnection();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     private final static String CREATE_USER_QUERY = "INSERT INTO users(name,password) VALUES(?,?)";
     private final static String GET_USER_QUERY = "SELECT * FROM users WHERE name=?";
 
@@ -24,7 +35,7 @@ public class CRUDUtils {
     private final static String GET_CATEGORY_PRODUCTS_QUERY = "SELECT * FROM products WHERE category = ?";
     private final static String GET_PRODUCT_BY_ID = "SELECT * FROM products WHERE id=?";
 
-    public static void createUser(User user, Connection connection) {
+    public static void createUser(User user) {
         try (PreparedStatement statement = connection.prepareStatement(CREATE_USER_QUERY)) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getPassword());
@@ -34,7 +45,7 @@ public class CRUDUtils {
         }
     }
 
-    public static User getUser(String name, Connection connection) throws ExecuteQueryException {
+    public static User getUser(String name) throws ExecuteQueryException {
         try (PreparedStatement statement = connection.prepareStatement(GET_USER_QUERY)) {
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
@@ -46,7 +57,7 @@ public class CRUDUtils {
         }
     }
 
-    public static List<Category> getCategories(Connection connection) throws ExecuteQueryException {
+    public static List<Category> getCategories() throws ExecuteQueryException {
         List<Category> categories = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(GET_CATEGORIES_QUERY)) {
             ResultSet resultSet = statement.executeQuery();
@@ -60,7 +71,7 @@ public class CRUDUtils {
 
     }
 
-    public static List<Product> getCategoryProducts(String categoryName, Connection connection) throws ExecuteQueryException {
+    public static List<Product> getCategoryProducts(String categoryName) throws ExecuteQueryException {
         List<Product> categoryProducts = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_CATEGORY_PRODUCTS_QUERY)) {
             preparedStatement.setString(1, categoryName);
@@ -77,7 +88,7 @@ public class CRUDUtils {
         }
     }
 
-    public static Product getProductById(int id, Connection connection) throws ExecuteQueryException {
+    public static Product getProductById(int id) throws ExecuteQueryException {
         Product product = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_PRODUCT_BY_ID)) {
             preparedStatement.setInt(1, id);

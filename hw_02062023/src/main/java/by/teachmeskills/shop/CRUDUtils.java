@@ -16,7 +16,6 @@ public class CRUDUtils {
     private CRUDUtils() {
 
     }
-
     private final static String CREATE_USER_QUERY = "INSERT INTO users(name,password) VALUES(?,?)";
     private final static String GET_USER_QUERY = "SELECT * FROM users WHERE name=?";
 

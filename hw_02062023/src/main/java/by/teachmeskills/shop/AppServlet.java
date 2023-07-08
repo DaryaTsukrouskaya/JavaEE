@@ -1,12 +1,6 @@
 package by.teachmeskills.shop;
-
-
-import by.teachmeskills.shop.exceptions.ExecuteQueryException;
-import by.teachmeskills.shop.listener.DBConnectionManager;
-import by.teachmeskills.shop.model.Category;
 import by.teachmeskills.shop.model.User;
 import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -36,29 +30,24 @@ public class AppServlet extends HttpServlet {
         String name = req.getParameter("username");
         String password = req.getParameter("password");
         if (name != null && password != null) {
-            ServletContext servletContext = getServletContext();
-            DBConnectionManager dbConnectionManager = (DBConnectionManager) servletContext.getAttribute("DBManager");
-            Connection connection = dbConnectionManager.getConnection();
-            User user = null;
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
             try {
-                user = CRUDUtils.getUser(name, connection);
-            } catch (ExecuteQueryException e) {
-                System.out.println(e.getMessage());
-            }
-            if (user != null && user.getPassword().equals(password)) {
-                req.getSession().setAttribute("user", user);
-            } else if (user == null) {
-                user = new User(name, password);
-                CRUDUtils.createUser(user, connection);
-                req.getSession().setAttribute("user", user);
-            } else {
-                RequestDispatcher requestDispatcher = req.getRequestDispatcher("login.jsp");
-                requestDispatcher.forward(req, resp);
-            }
-            try {
+                Connection connection = connectionPool.getConnection();
+                User user = null;
                 req.setAttribute("categories", CRUDUtils.getCategories(connection));
-            } catch (ExecuteQueryException e) {
-                System.out.println(e.getMessage());
+                user = CRUDUtils.getUser(name, connection);
+                if (user != null && user.getPassword().equals(password)) {
+                    req.getSession().setAttribute("user", user);
+                } else if (user == null) {
+                    user = new User(name, password);
+                    CRUDUtils.createUser(user, connection);
+                    req.getSession().setAttribute("user", user);
+                } else {
+                    RequestDispatcher requestDispatcher = req.getRequestDispatcher("login.jsp");
+                    requestDispatcher.forward(req, resp);
+                }
+            } catch (Exception e) {
+                System.out.println(e);
             }
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("home.jsp");
             requestDispatcher.forward(req, resp);

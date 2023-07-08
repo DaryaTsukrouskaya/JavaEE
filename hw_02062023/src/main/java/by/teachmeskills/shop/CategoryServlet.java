@@ -2,9 +2,7 @@ package by.teachmeskills.shop;
 
 
 import by.teachmeskills.shop.exceptions.ExecuteQueryException;
-import by.teachmeskills.shop.listener.DBConnectionManager;
 import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,12 +18,11 @@ public class CategoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("category.jsp");
         req.setAttribute("categoryName", req.getParameter("name"));
-        ServletContext servletContext = getServletContext();
-        DBConnectionManager dbConnectionManager = (DBConnectionManager) servletContext.getAttribute("DBManager");
-        Connection connection = dbConnectionManager.getConnection();
         try {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            Connection connection = connectionPool.getConnection();
             req.setAttribute("categoryProducts", CRUDUtils.getCategoryProducts(req.getParameter("name"), connection));
-        } catch (ExecuteQueryException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         requestDispatcher.forward(req, resp);

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login form example</title>
+    <title>Авторизация</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -33,6 +33,9 @@
                     <div class="invalid-feedback">Введите пароль!</div>
                 </div>
                 <button id="loginBtn" type="submit" class="btn btn-primary">Войти</button>
+                <br>
+                <span>${state}</span><br>
+                <a href="register">Зарегестрироваться</a>
             </form>
         </div>
     </div>

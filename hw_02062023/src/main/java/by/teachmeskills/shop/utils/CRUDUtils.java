@@ -1,5 +1,6 @@
-package by.teachmeskills.shop;
+package by.teachmeskills.shop.utils;
 
+import by.teachmeskills.shop.ConnectionPool;
 import by.teachmeskills.shop.exceptions.ExecuteQueryException;
 import by.teachmeskills.shop.model.Category;
 import by.teachmeskills.shop.model.Product;
@@ -9,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class CRUDUtils {
     private CRUDUtils() {
 
     }
+
     private static Connection connection;
 
     static {
@@ -27,8 +30,8 @@ public class CRUDUtils {
         }
     }
 
-    private final static String CREATE_USER_QUERY = "INSERT INTO users(name,password) VALUES(?,?)";
-    private final static String GET_USER_QUERY = "SELECT * FROM users WHERE name=?";
+    private final static String CREATE_USER_QUERY = "INSERT INTO users(name,surname,birthDate,email,password) VALUES(?,?,?,?,?)";
+    private final static String GET_USER_QUERY = "SELECT * FROM users WHERE email=?";
 
     private final static String GET_CATEGORIES_QUERY = "SELECT * FROM categories";
 
@@ -38,19 +41,24 @@ public class CRUDUtils {
     public static void createUser(User user) {
         try (PreparedStatement statement = connection.prepareStatement(CREATE_USER_QUERY)) {
             statement.setString(1, user.getName());
-            statement.setString(2, user.getPassword());
+            statement.setString(2, user.getSurname());
+            statement.setTimestamp(3, Timestamp.valueOf(user.getBirthDate().atStartOfDay()));
+            statement.setString(4, user.getEmail());
+            statement.setString(5, user.getPassword());
             statement.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public static User getUser(String name) throws ExecuteQueryException {
+    public static User getUser(String email) throws ExecuteQueryException {
         try (PreparedStatement statement = connection.prepareStatement(GET_USER_QUERY)) {
-            statement.setString(1, name);
+            statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            User user = new User(resultSet.getString("login"), resultSet.getString("password"));
+            User user = new User(resultSet.getString("name"), resultSet.getString("surname"),
+                    resultSet.getTimestamp("birthDate").toLocalDateTime().toLocalDate(),
+                    resultSet.getString("email"), resultSet.getString("password"));
             return user;
         } catch (SQLException e) {
             throw new ExecuteQueryException("User not found!");

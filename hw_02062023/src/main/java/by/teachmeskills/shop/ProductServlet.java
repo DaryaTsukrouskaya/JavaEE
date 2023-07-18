@@ -1,8 +1,7 @@
 package by.teachmeskills.shop;
 
-import by.teachmeskills.shop.exceptions.ExecuteQueryException;
+import by.teachmeskills.shop.utils.CRUDUtils;
 import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.Connection;
 
 @WebServlet("/product")
 public class ProductServlet extends HttpServlet {

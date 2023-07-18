@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>${categoryName}</title>
+    <title>${productName}</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -15,7 +15,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand">${categoryName}</a>
+            <a class="navbar-brand">${productName}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -39,24 +39,27 @@
 </header>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<div class="row">
-    <c:forEach items="${categoryProducts}" var="product">
-        <div class="col d-flex justify-content-center">
-            <a href="product?id=${product.getId()}" style="text-decoration:none;color:inherit">
-                <div class="card" style="width: 19rem; margin: 20px">
-                    <img class="card-img-top"
-                         src="${contextPath}/images/${product.getImageName()}" alt="Card image">
-                    <div class="card-body" style="text-align: center">
-                        <h5 class="card-title"> ${product.getName()}</h5>
-                        <p class="card-text">${product.getDescription()}</p>
-                        <p class="card-text">Цена: <fmt:formatNumber value="${product.getPrice()}"
-                                                                     type="currency"/><br>
-                    </div>
-                </div>
-            </a>
+<c:set var="product" value="${product}"/>
+<div class="container-fluid">
+    <div class="row g-0">
+        <div class="col-md-3">
+            <img src="${contextPath}/images/${product.getImageName()}" class="img-fluid rounded-start"
+                 alt="Card image">
         </div>
-    </c:forEach>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h3 class="card-title">${product.getName()}</h3><br>
+                <p class="card-text">${product.getDescription()}</p><br>
+                <h4 class="card-text"><small class="text-body-secondary">
+                    Цена: <fmt:formatNumber value="${product.getPrice()}"
+                                            type="currency"/>
+                </small></h4>
+                <br>
+                <br>
+                <button type="button" class="btn btn-dark btn-lg">Купить</button>
+            </div>
+        </div>
+    </div>
 </div>
-
 </body>
 </html>

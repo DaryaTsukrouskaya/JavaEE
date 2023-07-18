@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class CRUDUtils {
     private CRUDUtils() {
@@ -24,6 +23,7 @@ public class CRUDUtils {
     private final static String GET_CATEGORIES_QUERY = "SELECT * FROM categories";
 
     private final static String GET_CATEGORY_PRODUCTS_QUERY = "SELECT * FROM products WHERE category = ?";
+    private final static String GET_PRODUCT_BY_ID = "SELECT * FROM products WHERE id=?";
 
     public static void createUser(User user, Connection connection) {
         try (PreparedStatement statement = connection.prepareStatement(CREATE_USER_QUERY)) {
@@ -43,7 +43,7 @@ public class CRUDUtils {
             User user = new User(resultSet.getString("login"), resultSet.getString("password"));
             return user;
         } catch (SQLException e) {
-          throw new ExecuteQueryException("User not found!");
+            throw new ExecuteQueryException("User not found!");
         }
     }
 
@@ -67,9 +67,10 @@ public class CRUDUtils {
             preparedStatement.setString(1, categoryName);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                categoryProducts.add(new Product(resultSet.getString("name"),
-                        resultSet.getString("description"), resultSet.getString("category"),
-                        resultSet.getBigDecimal("price"),resultSet.getString("imageName")));
+                categoryProducts.add(new Product(resultSet.getInt("id"), resultSet.getString("name"),
+                        resultSet.getString("description"),
+                        resultSet.getString("imageName"), resultSet.getString("category"),
+                        resultSet.getBigDecimal("price")));
             }
             return categoryProducts;
         } catch (SQLException e) {
@@ -77,5 +78,23 @@ public class CRUDUtils {
         }
     }
 
+    public static Product getProductById(int id, Connection connection) throws ExecuteQueryException {
+        Product product = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_PRODUCT_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                product = new Product(resultSet.getInt("id"), resultSet.getString("name"),
+                        resultSet.getString("description"),
+                        resultSet.getString("imageName"), resultSet.getString("category"),
+                        resultSet.getBigDecimal("price"));
+            }
+            return product;
+
+        } catch (SQLException e) {
+            throw new ExecuteQueryException("Product not found!");
+        }
+
+    }
 
 }

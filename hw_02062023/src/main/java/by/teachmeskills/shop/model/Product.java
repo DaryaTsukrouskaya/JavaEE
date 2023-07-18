@@ -13,19 +13,10 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 public class Product {
-    private String id;
+    private int id;
     private String name;
     private String description;
     private String imageName;
     private String category;
     private BigDecimal price;
-
-    public Product(String name, String description, String category, BigDecimal price, String imageName) {
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.price = price;
-        this.imageName = imageName;
-
-    }
 }

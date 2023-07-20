@@ -19,7 +19,7 @@ public class ProductServlet extends HttpServlet {
             req.setAttribute("product", CRUDUtils.getProductById(Integer.parseInt(req.getParameter("id"))));
             req.setAttribute("productName", CRUDUtils.getProductById(Integer.parseInt(req.getParameter("id"))).getName());
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         requestDispatcher.forward(req, resp);
     }

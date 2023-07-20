@@ -3,8 +3,8 @@ package by.teachmeskills.shop.utils;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class validatorUtils {
-    private validatorUtils() {
+public class ValidatorUtils {
+    private ValidatorUtils() {
 
     }
 
@@ -45,7 +45,7 @@ public class validatorUtils {
         return State.VALID;
     }
 
-    public static String credentialValidation(String name, String surname, LocalDate birth, String email, String password, String repPassword) {
+    public static String userDataValidation(String name, String surname, LocalDate birth, String email, String password, String repPassword) {
         String errorMessage = "";
         if (nameValidation(name) != State.VALID) {
             errorMessage += State.INVALID_NAME.getState();

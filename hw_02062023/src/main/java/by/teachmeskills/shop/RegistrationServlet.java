@@ -1,10 +1,9 @@
 package by.teachmeskills.shop;
 
-import by.teachmeskills.shop.exceptions.ExecuteQueryException;
 import by.teachmeskills.shop.model.User;
 import by.teachmeskills.shop.utils.CRUDUtils;
 import by.teachmeskills.shop.utils.State;
-import by.teachmeskills.shop.utils.validatorUtils;
+import by.teachmeskills.shop.utils.ValidatorUtils;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 
 
 @WebServlet("/register")
@@ -35,16 +35,16 @@ public class RegistrationServlet extends HttpServlet {
         String email = req.getParameter("newUserEmail");
         String password = req.getParameter("newUserPassword");
         String repPassword = req.getParameter("repeatPassword");
-        String state = validatorUtils.credentialValidation(name, surname, birthDate, email, password, repPassword);
+        String state = ValidatorUtils.userDataValidation(name, surname, birthDate, email, password, repPassword);
         req.setAttribute("state", state);
         if (state.equals(State.VALID.getState())) {
             User user = new User(name, surname, birthDate, email, password);
-            CRUDUtils.createUser(user);
             try {
+                CRUDUtils.createUser(user);
                 req.setAttribute("categories", CRUDUtils.getCategories());
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher("home.jsp");
                 requestDispatcher.forward(req, resp);
-            } catch (ExecuteQueryException e) {
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         } else {

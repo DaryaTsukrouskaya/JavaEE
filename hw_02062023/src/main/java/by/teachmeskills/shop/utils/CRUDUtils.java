@@ -19,16 +19,7 @@ public class CRUDUtils {
 
     }
 
-    private static Connection connection;
-
-    static {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        try {
-            connection = connectionPool.getConnection();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     private final static String CREATE_USER_QUERY = "INSERT INTO users(name,surname,birthDate,email,password) VALUES(?,?,?,?,?)";
     private final static String GET_USER_QUERY = "SELECT * FROM users WHERE email=?";
@@ -38,7 +29,8 @@ public class CRUDUtils {
     private final static String GET_CATEGORY_PRODUCTS_QUERY = "SELECT * FROM products WHERE category = ?";
     private final static String GET_PRODUCT_BY_ID = "SELECT * FROM products WHERE id=?";
 
-    public static void createUser(User user) {
+    public static void createUser(User user) throws Exception {
+        Connection connection = connectionPool.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(CREATE_USER_QUERY)) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getSurname());
@@ -48,10 +40,13 @@ public class CRUDUtils {
             statement.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
-    public static User getUser(String email) throws ExecuteQueryException {
+    public static User getUser(String email) throws Exception {
+        Connection connection = connectionPool.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(GET_USER_QUERY)) {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
@@ -62,10 +57,14 @@ public class CRUDUtils {
             return user;
         } catch (SQLException e) {
             throw new ExecuteQueryException("User not found!");
+        } finally {
+            connectionPool.closeConnection(connection);
         }
+
     }
 
-    public static List<Category> getCategories() throws ExecuteQueryException {
+    public static List<Category> getCategories() throws Exception {
+        Connection connection = connectionPool.getConnection();
         List<Category> categories = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(GET_CATEGORIES_QUERY)) {
             ResultSet resultSet = statement.executeQuery();
@@ -75,11 +74,14 @@ public class CRUDUtils {
             return categories;
         } catch (SQLException e) {
             throw new ExecuteQueryException("Categories are not found!");
+        } finally {
+            connectionPool.closeConnection(connection);
         }
 
     }
 
-    public static List<Product> getCategoryProducts(String categoryName) throws ExecuteQueryException {
+    public static List<Product> getCategoryProducts(String categoryName) throws Exception {
+        Connection connection = connectionPool.getConnection();
         List<Product> categoryProducts = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_CATEGORY_PRODUCTS_QUERY)) {
             preparedStatement.setString(1, categoryName);
@@ -93,10 +95,13 @@ public class CRUDUtils {
             return categoryProducts;
         } catch (SQLException e) {
             throw new ExecuteQueryException("Category products are not found!");
+        } finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
-    public static Product getProductById(int id) throws ExecuteQueryException {
+    public static Product getProductById(int id) throws Exception {
+        Connection connection = connectionPool.getConnection();
         Product product = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_PRODUCT_BY_ID)) {
             preparedStatement.setInt(1, id);
@@ -111,6 +116,8 @@ public class CRUDUtils {
 
         } catch (SQLException e) {
             throw new ExecuteQueryException("Product not found!");
+        } finally {
+            connectionPool.closeConnection(connection);
         }
 
     }

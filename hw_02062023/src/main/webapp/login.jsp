@@ -17,7 +17,8 @@
         <div class="col-md-8 offset-md-4">
             <h2>Вход</h2>
             <p>Заполните форму для входа</p>
-            <form method="post" action="login" class="needs-validation" novalidate>
+            <form method="post" action="eshop" class="needs-validation" novalidate>
+                <input type="hidden" name="command" value="sign-in"/>
                 <div class="form-group">
                     <label for="username">Логин:</label>
                     <input type="text" class="form-control w-25" id="username" placeholder="Введите логин"
@@ -35,7 +36,7 @@
                 <button id="loginBtn" type="submit" class="btn btn-primary">Войти</button>
                 <br>
                 <span>${state}</span><br>
-                <a href="register">Зарегестрироваться</a>
+                <a href="eshop?command=register">Зарегистрироваться</a>
             </form>
         </div>
     </div>

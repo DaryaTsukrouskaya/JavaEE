@@ -24,13 +24,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="login">Главная</a>
+                        <a class="nav-link" href="eshop?command=get-homePage">Главная</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Профиль</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Корзина</a>
+                        <a class="nav-link" href="eshop?command=redirect-to-shopping-cart">Корзина</a>
                     </li>
                 </ul>
             </div>
@@ -56,7 +56,10 @@
                 </small></h4>
                 <br>
                 <br>
-                <button type="button" class="btn btn-dark btn-lg">Купить</button>
+                <a href="eshop?command=add-product-to-cart&productId=${product.getId()}">
+                    <button type="button" class="btn btn-dark btn-lg">Купить</button>
+                </a>
+
             </div>
         </div>
     </div>

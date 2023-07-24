@@ -35,20 +35,31 @@
         </div>
     </nav>
 </header>
-<div class="row">
-    <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-    <c:forEach items="${cartProductsList}" var="product">
-        <div class="card" style="width: 18rem;">
-            <img src="${contextPath}/images/${product.getImageName()}" class="card-img-top" alt="Card image">
-            <div class="card-body">
-                <h5 class="card-title">${product.getName()}</h5>
-                <p class="card-text">${product.getDescription()}</p>
-                <p class="card-text">Цена: <fmt:formatNumber value="${product.getPrice()}" type="currency"/></p>
-                <a href="eshop?command=delete-product-from-cart&productId=${product.getId()}" class="btn btn-primary">Удалить</a>
+<%--<div class="row">--%>
+
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:forEach items="${cartProductsList}" var="product">
+    <div class="card mb-3" style="max-width: 540px;margin:10px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="${contextPath}/images/${product.getImageName()}" class="img-fluid rounded-start"
+                     alt="Card image">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">${product.getName()}</h5>
+                    <p class="card-text">${product.getDescription()}</p>
+                    <p class="card-text">Цена: <fmt:formatNumber value="${product.getPrice()}" type="currency"/></p>
+                    <a href="eshop?command=delete-product-from-cart&productId=${product.getId()}"
+                       class="btn btn-dark btn-lg">Удалить</a>
+                </div>
             </div>
         </div>
-    </c:forEach>
-</div>
-
+    </div>
+</c:forEach>
+<a href="#" class="btn btn-dark btn-lg" style="margin: 10px">Оформить заказ</a>
+<a href="eshop?command=delete-all-products-from-cart" class="btn btn-dark btn-lg" style="margin: 10px">Очистить
+    корзину</a>
 </body>
 </html>

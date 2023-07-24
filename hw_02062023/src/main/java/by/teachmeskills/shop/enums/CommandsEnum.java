@@ -8,7 +8,8 @@ public enum CommandsEnum {
     PRODUCT_PAGE_COMMAND("product-redirect"),
     REDIRECT_SHOPPING_CART_COMMAND("redirect-to-shopping-cart"),
     ADD_PRODUCT_TO_CART_COMMAND("add-product-to-cart"),
-    DELETE_PRODUCT_FROM_CART_COMMAND("delete-product-from-cart");
+    DELETE_PRODUCT_FROM_CART_COMMAND("delete-product-from-cart"),
+    DELETE_ALL_PRODUCTS_FROM_CART_COMMAND("delete-all-products-from-cart");
 
     private String command;
 

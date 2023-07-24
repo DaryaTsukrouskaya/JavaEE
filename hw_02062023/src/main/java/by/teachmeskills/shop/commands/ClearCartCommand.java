@@ -6,17 +6,15 @@ import by.teachmeskills.shop.model.Cart;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-public class RedirectToShoppingCartCommand implements BaseCommand {
+public class ClearCartCommand implements BaseCommand {
 
     @Override
-    public String execute(HttpServletRequest req) throws CommandException {
-        HttpSession session = req.getSession();
+    public String execute(HttpServletRequest request) throws CommandException {
+        HttpSession session = request.getSession();
         Cart cart = (Cart) session.getAttribute("cart");
-        if (cart == null || cart.getProducts().isEmpty()) {
-            req.setAttribute("cartProductsList", "");
-        } else {
-            req.setAttribute("cartProductsList", cart.getProducts());
-        }
+        cart.clear();
+        session.setAttribute("cart", cart);
+        request.setAttribute("cartProductsList", cart.getProducts());
         return PagesPathEnum.CART_PAGE.getPath();
     }
 }

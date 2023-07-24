@@ -33,12 +33,11 @@
                            required>
                     <div class="invalid-feedback">Введите пароль!</div>
                 </div>
-                <div class="d-grid gap-2 col-6 mx-auto">
-                    <button id="loginBtn" type="submit" class="btn btn-primary">Войти</button>
+                <button id="loginBtn" type="submit" class="btn btn-primary w-25">Войти</button>
+                <div class="form-group">
+                    <span>${state}</span><br>
+                    <a href="eshop?command=register" class="form-control w-25">Зарегистрироваться</a>
                 </div>
-                <br>
-                <span>${state}</span><br>
-                <a href="eshop?command=register">Зарегистрироваться</a>
             </form>
         </div>
     </div>

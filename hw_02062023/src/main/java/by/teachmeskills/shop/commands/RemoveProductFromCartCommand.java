@@ -22,11 +22,11 @@ public class RemoveProductFromCartCommand implements BaseCommand {
                 Product product = CRUDUtils.getProductById(productId);
                 cart.removeProduct(product.getId());
                 session.setAttribute("cart", cart);
-                req.setAttribute("product", product);
+                req.setAttribute("cartProductsList", cart.getProducts());
             } catch (DBConnectionException | ExecuteQueryException e) {
                 System.out.println(e.getMessage());
             }
         }
-        return PagesPathEnum.PRODUCT_PAGE.getPath();
+        return PagesPathEnum.CART_PAGE.getPath();
     }
 }

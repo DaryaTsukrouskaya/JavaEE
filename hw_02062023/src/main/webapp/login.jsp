@@ -33,7 +33,9 @@
                            required>
                     <div class="invalid-feedback">Введите пароль!</div>
                 </div>
-                <button id="loginBtn" type="submit" class="btn btn-primary">Войти</button>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button id="loginBtn" type="submit" class="btn btn-primary">Войти</button>
+                </div>
                 <br>
                 <span>${state}</span><br>
                 <a href="eshop?command=register">Зарегистрироваться</a>

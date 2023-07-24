@@ -13,15 +13,38 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<h2>Корзина</h2>
-<div class="container-fluid mb-4">
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand">Корзина</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="eshop?command=get-homePage">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Профиль</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="row">
+    <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
     <c:forEach items="${cartProductsList}" var="product">
-        <div class="card w-25 m-1" type="product">
+        <div class="card" style="width: 18rem;">
+            <img src="${contextPath}/images/${product.getImageName()}" class="card-img-top" alt="Card image">
             <div class="card-body">
-                <h4 class="card-title">${product.getDescription()}</h4>
-                <h4 class="card-title">${product.getDescription()}</h4>
-                <h4 class="card-title">${product.getPrice()}</h4>
+                <h5 class="card-title">${product.getName()}</h5>
+                <p class="card-text">${product.getDescription()}</p>
+                <p class="card-text">Цена: <fmt:formatNumber value="${product.getPrice()}" type="currency"/></p>
+                <a href="eshop?command=delete-product-from-cart&productId=${product.getId()}" class="btn btn-primary">Удалить</a>
             </div>
         </div>
     </c:forEach>

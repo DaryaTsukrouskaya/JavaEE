@@ -26,7 +26,7 @@
                         <a class="nav-link" href="eshop?command=get-homePage">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Профиль</a>
+                        <a class="nav-link" href="eshop?command=userProfile">Профиль</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="eshop?command=redirect-to-shopping-cart">Корзина</a>

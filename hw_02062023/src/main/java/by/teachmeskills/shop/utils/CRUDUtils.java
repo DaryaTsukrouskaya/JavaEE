@@ -1,11 +1,14 @@
 package by.teachmeskills.shop.utils;
 
+import by.teachmeskills.shop.commands.CategoryProductPageCommand;
 import by.teachmeskills.shop.exceptions.DBConnectionException;
 import by.teachmeskills.shop.exceptions.ExecuteQueryException;
 import by.teachmeskills.shop.exceptions.UserAlreadyExistsException;
 import by.teachmeskills.shop.model.Category;
 import by.teachmeskills.shop.model.Product;
 import by.teachmeskills.shop.model.User;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +22,8 @@ public class CRUDUtils {
     private CRUDUtils() {
 
     }
+
+    private final static Logger log = LogManager.getLogger(CategoryProductPageCommand.class);
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
@@ -43,7 +48,7 @@ public class CRUDUtils {
                 statement.setString(5, user.getPassword());
                 statement.execute();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                log.error(ex.getMessage());
             } finally {
                 connectionPool.closeConnection(connection);
             }

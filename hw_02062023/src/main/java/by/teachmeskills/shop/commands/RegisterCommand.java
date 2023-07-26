@@ -12,10 +12,14 @@ import by.teachmeskills.shop.utils.CRUDUtils;
 import by.teachmeskills.shop.utils.ValidatorUtils;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.time.LocalDate;
 
 public class RegisterCommand implements BaseCommand {
+    private final static Logger log = LogManager.getLogger(CategoryProductPageCommand.class);
+
     @Override
     public String execute(HttpServletRequest req) throws CommandException {
         String name = req.getParameter("newUsername");
@@ -41,9 +45,10 @@ public class RegisterCommand implements BaseCommand {
                 req.setAttribute("categories", CRUDUtils.getCategories());
                 req.getSession().setAttribute("user", user);
             } catch (DBConnectionException | ExecuteQueryException e) {
-                System.out.println(e.getMessage());
+                log.error(e.getMessage());
             } catch (UserAlreadyExistsException e) {
                 req.setAttribute("state", e.getMessage());
+                log.error(e.getMessage());
                 return PagesPathEnum.REGISTER_PAGE.getPath();
             }
             return PagesPathEnum.HOME_PAGE.getPath();

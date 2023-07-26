@@ -9,8 +9,11 @@ import by.teachmeskills.shop.model.Product;
 import by.teachmeskills.shop.utils.CRUDUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class RemoveProductFromCartCommand implements BaseCommand {
+    private final static Logger log = LogManager.getLogger(CategoryProductPageCommand.class);
 
     @Override
     public String execute(HttpServletRequest req) throws CommandException {
@@ -24,7 +27,7 @@ public class RemoveProductFromCartCommand implements BaseCommand {
                 session.setAttribute("cart", cart);
                 req.setAttribute("cartProductsList", cart.getProducts());
             } catch (DBConnectionException | ExecuteQueryException e) {
-                System.out.println(e.getMessage());
+                log.info(e.getMessage());
             }
         }
         return PagesPathEnum.CART_PAGE.getPath();

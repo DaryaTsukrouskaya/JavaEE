@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>${productName}</title>
+    <title>${product.getName()}</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -13,9 +13,11 @@
 </head>
 <body>
 <header>
+    <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+    <c:set var="product" value="${product}"/>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand">${productName}</a>
+            <a class="navbar-brand">${product.getName()}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -37,9 +39,6 @@
         </div>
     </nav>
 </header>
-
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<c:set var="product" value="${product}"/>
 <div class="container-fluid">
     <div class="row g-0">
         <div class="col-md-3">

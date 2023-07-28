@@ -24,13 +24,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="login">Главная</a>
+                        <a class="nav-link" href="eshop?command=get-homePage">Главная</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Профиль</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Корзина</a>
+                        <a class="nav-link" href="eshop?command=redirect-to-shopping-cart">Корзина</a>
                     </li>
                 </ul>
             </div>
@@ -42,7 +42,7 @@
 <div class="row">
     <c:forEach items="${categoryProducts}" var="product">
         <div class="col d-flex justify-content-center">
-            <a href="product?id=${product.getId()}" style="text-decoration:none;color:inherit">
+            <a href="eshop?command=product-redirect&id=${product.getId()}" style="text-decoration:none;color:inherit">
                 <div class="card" style="width: 19rem; margin: 20px">
                     <img class="card-img-top"
                          src="${contextPath}/images/${product.getImageName()}" alt="Card image">

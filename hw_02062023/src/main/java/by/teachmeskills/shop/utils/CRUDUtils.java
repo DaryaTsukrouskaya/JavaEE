@@ -1,7 +1,8 @@
 package by.teachmeskills.shop.utils;
 
-import by.teachmeskills.shop.ConnectionPool;
+import by.teachmeskills.shop.exceptions.DBConnectionException;
 import by.teachmeskills.shop.exceptions.ExecuteQueryException;
+import by.teachmeskills.shop.exceptions.UserAlreadyExistsException;
 import by.teachmeskills.shop.model.Category;
 import by.teachmeskills.shop.model.Product;
 import by.teachmeskills.shop.model.User;
@@ -23,29 +24,33 @@ public class CRUDUtils {
 
     private final static String CREATE_USER_QUERY = "INSERT INTO users(name,surname,birthDate,email,password) VALUES(?,?,?,?,?)";
     private final static String GET_USER_QUERY = "SELECT * FROM users WHERE email=?";
-
     private final static String GET_CATEGORIES_QUERY = "SELECT * FROM categories";
-
     private final static String GET_CATEGORY_PRODUCTS_QUERY = "SELECT * FROM products WHERE category = ?";
     private final static String GET_PRODUCT_BY_ID = "SELECT * FROM products WHERE id=?";
 
-    public static void createUser(User user) throws Exception {
+    public static void createUser(User user) throws DBConnectionException, UserAlreadyExistsException {
         Connection connection = connectionPool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(CREATE_USER_QUERY)) {
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getSurname());
-            statement.setTimestamp(3, Timestamp.valueOf(user.getBirthDate().atStartOfDay()));
-            statement.setString(4, user.getEmail());
-            statement.setString(5, user.getPassword());
-            statement.execute();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            connectionPool.closeConnection(connection);
+        try {
+            if (getUser(user.getEmail()) != null) {
+                throw new UserAlreadyExistsException("Такой пользователь уже существует!");
+            }
+        } catch (ExecuteQueryException e) {
+            try (PreparedStatement statement = connection.prepareStatement(CREATE_USER_QUERY)) {
+                statement.setString(1, user.getName());
+                statement.setString(2, user.getSurname());
+                statement.setTimestamp(3, Timestamp.valueOf(user.getBirthDate().atStartOfDay()));
+                statement.setString(4, user.getEmail());
+                statement.setString(5, user.getPassword());
+                statement.execute();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            } finally {
+                connectionPool.closeConnection(connection);
+            }
         }
     }
 
-    public static User getUser(String email) throws Exception {
+    public static User getUser(String email) throws DBConnectionException, ExecuteQueryException {
         Connection connection = connectionPool.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(GET_USER_QUERY)) {
             statement.setString(1, email);
@@ -63,7 +68,7 @@ public class CRUDUtils {
 
     }
 
-    public static List<Category> getCategories() throws Exception {
+    public static List<Category> getCategories() throws DBConnectionException, ExecuteQueryException {
         Connection connection = connectionPool.getConnection();
         List<Category> categories = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(GET_CATEGORIES_QUERY)) {
@@ -80,7 +85,7 @@ public class CRUDUtils {
 
     }
 
-    public static List<Product> getCategoryProducts(String categoryName) throws Exception {
+    public static List<Product> getCategoryProducts(String categoryName) throws DBConnectionException, ExecuteQueryException {
         Connection connection = connectionPool.getConnection();
         List<Product> categoryProducts = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_CATEGORY_PRODUCTS_QUERY)) {
@@ -100,7 +105,7 @@ public class CRUDUtils {
         }
     }
 
-    public static Product getProductById(int id) throws Exception {
+    public static Product getProductById(int id) throws DBConnectionException, ExecuteQueryException {
         Connection connection = connectionPool.getConnection();
         Product product = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_PRODUCT_BY_ID)) {

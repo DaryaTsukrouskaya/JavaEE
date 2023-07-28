@@ -1,4 +1,6 @@
-package by.teachmeskills.shop;
+package by.teachmeskills.shop.utils;
+
+import by.teachmeskills.shop.exceptions.DBConnectionException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -52,16 +54,16 @@ public class ConnectionPool {
         }
     }
 
-    private void openAdditionalConnection() throws Exception {
+    private void openAdditionalConnection() throws DBConnectionException {
         try {
             pool.add(DriverManager.getConnection(url, login, password));
             currentConnectionNumber++;
         } catch (SQLException e) {
-            throw new Exception("New connection wasn't add to the connection pool", e);
+            throw new DBConnectionException("New connection wasn't add to the connection pool");
         }
     }
 
-    public Connection getConnection() throws Exception {
+    public Connection getConnection() throws DBConnectionException {
         Connection connection;
         try {
             if (pool.isEmpty() && currentConnectionNumber < MAX_CONNECTION_COUNT) {
@@ -70,12 +72,12 @@ public class ConnectionPool {
             connection = pool.take();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new Exception("Max count of connections was reached!");
+            throw new DBConnectionException("Max count of connections was reached!");
         }
         return connection;
     }
 
-    public void closeConnection(Connection connection) throws Exception {
+    public void closeConnection(Connection connection) throws DBConnectionException {
         if (connection != null) {
             if (currentConnectionNumber > MIN_CONNECTION_COUNT) {
                 currentConnectionNumber--;
@@ -83,7 +85,7 @@ public class ConnectionPool {
             try {
                 pool.put(connection);
             } catch (InterruptedException e) {
-                throw new Exception("Connection wasn't returned into pool properly");
+                throw new DBConnectionException("Connection wasn't returned into pool properly");
             }
         }
 

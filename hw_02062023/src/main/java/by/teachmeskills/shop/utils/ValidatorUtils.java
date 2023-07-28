@@ -1,12 +1,19 @@
 package by.teachmeskills.shop.utils;
 
+import by.teachmeskills.shop.enums.State;
+import by.teachmeskills.shop.exceptions.RequestParamNullException;
+
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class ValidatorUtils {
     private ValidatorUtils() {
 
     }
+
+    private static final String REQUEST_PARAMETER_IS_NULL_ERROR = "Request parameter is not initialized!";
 
     public static State nameValidation(String name) {
         if (!name.matches("^[а-яА-Яa-zA-Z]+$")) {
@@ -67,6 +74,12 @@ public class ValidatorUtils {
         }
         return State.VALID.getState();
 
+    }
+
+    public static void validateParamNotNull(String... parameters) throws RequestParamNullException {
+        if (Arrays.stream(parameters).anyMatch(Objects::isNull)) {
+            throw new RequestParamNullException(REQUEST_PARAMETER_IS_NULL_ERROR);
+        }
     }
 
 }

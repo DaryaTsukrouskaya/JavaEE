@@ -1,4 +1,4 @@
-package by.teachmeskills.shop.utils;
+package by.teachmeskills.shop.enums;
 
 import lombok.NoArgsConstructor;
 import lombok.ToString;

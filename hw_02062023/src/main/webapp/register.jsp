@@ -17,7 +17,8 @@
         <div class="col-md-8 offset-md-4">
             <h2>Регистрация</h2>
             <p>Заполните форму для регистрации</p>
-            <form id="registrationForm" method="post" action="register" onsubmit="return validateForm()">
+            <form id="registrationForm" method="post" action="eshop" onsubmit="return validateForm()">
+                <input type="hidden" name="command" value="register"/>
                 <div class="form-group">
                     <label for="name">Имя: </label>
                     <input type="text" class="form-control w-25" id="name" placeholder="Имя"
@@ -84,7 +85,10 @@
                     <span id="matchingError" style="display: none">*Пароли не совпадают!</span>
                     <div class="invalid-feedback">Повторите пароль!</div>
                 </div>
-                <button type="submit" class="btn btn-primary">Зарегистрироваться</button><br>
+                <a href="eshop?command=register">
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                </a>
+                <br>
                 <span>${state}</span>
             </form>
         </div>

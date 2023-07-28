@@ -29,6 +29,7 @@ public class AddProductToCartCommand implements BaseCommand {
             cart.addProduct(product);
             session.setAttribute("cart", cart);
             req.setAttribute("product", product);
+            log.info("product added");
         } catch (DBConnectionException | ExecuteQueryException e) {
             log.error(e.getMessage());
         }

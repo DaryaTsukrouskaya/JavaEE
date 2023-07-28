@@ -12,10 +12,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="product" value="${product}"/>
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand">${productName}</a>
+            <a class="navbar-brand">${product.getName()}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -37,9 +39,6 @@
         </div>
     </nav>
 </header>
-
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<c:set var="product" value="${product}"/>
 <div class="container-fluid">
     <div class="row g-0">
         <div class="col-md-3">

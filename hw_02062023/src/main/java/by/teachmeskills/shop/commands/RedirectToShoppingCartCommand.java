@@ -13,10 +13,9 @@ public class RedirectToShoppingCartCommand implements BaseCommand {
         HttpSession session = req.getSession();
         Cart cart = (Cart) session.getAttribute("cart");
         if (cart == null || cart.getProducts().isEmpty()) {
-            req.setAttribute("cartProductsList", "");
-        } else {
-            req.setAttribute("cartProductsList", cart.getProducts());
+            cart = new Cart();
         }
+        req.setAttribute("cart", cart);
         return PagesPathEnum.CART_PAGE.getPath();
     }
 }

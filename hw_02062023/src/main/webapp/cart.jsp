@@ -36,7 +36,8 @@
     </nav>
 </header>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<c:forEach items="${cartProductsList}" var="product">
+<c:set var="cart" value="${cart}"/>
+<c:forEach items="${cart.getProducts()}" var="product">
     <div class="card mb-3" style="max-width: 540px;margin:10px;">
         <div class="row g-0">
             <div class="col-md-4">

@@ -16,7 +16,6 @@ public class RedirectToShoppingCartCommand implements BaseCommand {
             cart = new Cart();
         }
         req.setAttribute("cart", cart);
-
         return PagesPathEnum.CART_PAGE.getPath();
     }
 }

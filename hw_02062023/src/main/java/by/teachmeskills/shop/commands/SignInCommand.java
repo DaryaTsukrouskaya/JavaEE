@@ -9,8 +9,12 @@ import by.teachmeskills.shop.model.User;
 import by.teachmeskills.shop.utils.CRUDUtils;
 import by.teachmeskills.shop.utils.ValidatorUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class SignInCommand implements BaseCommand {
+    private final Logger log = LogManager.getLogger(CategoryProductPageCommand.class);
+
     @Override
     public String execute(HttpServletRequest req) throws CommandException {
         String email = req.getParameter("username");
@@ -26,7 +30,7 @@ public class SignInCommand implements BaseCommand {
                     return PagesPathEnum.SIGN_IN_PAGE.getPath();
                 }
             } catch (DBConnectionException | ExecuteQueryException e) {
-                System.out.println(e.getMessage());
+                log.error(e.getMessage());
                 req.setAttribute("state", "Неверный логин или пароль");
                 return PagesPathEnum.SIGN_IN_PAGE.getPath();
             }

@@ -8,15 +8,19 @@ import by.teachmeskills.shop.model.Product;
 import by.teachmeskills.shop.utils.CRUDUtils;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class RedirectToProductPageCommand implements BaseCommand {
+    private final static Logger log = LogManager.getLogger(CategoryProductPageCommand.class);
+
     @Override
     public String execute(HttpServletRequest req) throws CommandException {
         try {
             Product product = CRUDUtils.getProductById(Integer.parseInt(req.getParameter("id")));
             req.setAttribute("product", product);
         } catch (DBConnectionException | ExecuteQueryException e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
         }
         return PagesPathEnum.PRODUCT_PAGE.getPath();
     }

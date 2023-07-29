@@ -12,6 +12,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="product" value="${product}"/>
 <header>
     <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
     <c:set var="product" value="${product}"/>
@@ -29,7 +31,7 @@
                         <a class="nav-link" href="eshop?command=get-homePage">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Профиль</a>
+                        <a class="nav-link" href="eshop?command=userProfile">Профиль</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="eshop?command=redirect-to-shopping-cart">Корзина</a>

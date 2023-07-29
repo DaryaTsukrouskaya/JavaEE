@@ -9,8 +9,12 @@ import by.teachmeskills.shop.model.Product;
 import by.teachmeskills.shop.utils.CRUDUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class AddProductToCartCommand implements BaseCommand {
+    private final static Logger log = LogManager.getLogger(AddProductToCartCommand.class);
+
     @Override
     public String execute(HttpServletRequest req) throws CommandException {
         HttpSession session = req.getSession();
@@ -25,8 +29,9 @@ public class AddProductToCartCommand implements BaseCommand {
             cart.addProduct(product);
             session.setAttribute("cart", cart);
             req.setAttribute("product", product);
+            log.info("product added");
         } catch (DBConnectionException | ExecuteQueryException e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
         }
         return PagesPathEnum.PRODUCT_PAGE.getPath();
     }

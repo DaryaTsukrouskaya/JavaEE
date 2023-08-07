@@ -45,7 +45,7 @@
             <a href="eshop?command=product-redirect&id=${product.getId()}" style="text-decoration:none;color:inherit">
                 <div class="card" style="width: 19rem; margin: 20px">
                     <img class="card-img-top"
-                         src="${contextPath}/images/${product.getImageName()}" alt="Card image">
+                         src="${contextPath}/images/${product.getImagePath()}" alt="Card image">
                     <div class="card-body" style="text-align: center">
                         <h5 class="card-title"> ${product.getName()}</h5>
                         <p class="card-text">${product.getDescription()}</p>

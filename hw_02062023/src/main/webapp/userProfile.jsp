@@ -92,7 +92,7 @@
                 <div class="card mb-3" style="max-width: 540px;margin: 20px">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="${contextPath}/images/${product.getImageName()}"
+                            <img src="${contextPath}/images/${product.getImagePath()}"
                                  class="img-fluid rounded-start" alt="Card image">
                         </div>
                         <div class="col-md-8">

@@ -4,10 +4,11 @@ import by.teachmeskills.shop.enums.PagesPathEnum;
 import by.teachmeskills.shop.exceptions.CommandException;
 import by.teachmeskills.shop.exceptions.DBConnectionException;
 import by.teachmeskills.shop.exceptions.ExecuteQueryException;
-import by.teachmeskills.shop.model.Order;
-import by.teachmeskills.shop.model.Product;
-import by.teachmeskills.shop.model.User;
-import by.teachmeskills.shop.utils.CRUDUtils;
+import by.teachmeskills.shop.entities.Order;
+import by.teachmeskills.shop.entities.Product;
+import by.teachmeskills.shop.entities.User;
+import by.teachmeskills.shop.services.ProductService;
+import by.teachmeskills.shop.services.impl.ProductServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class UserProfileCommand implements BaseCommand {
     private final static Logger log = LogManager.getLogger(CategoryProductPageCommand.class);
+    private static final ProductService productService = new ProductServiceImpl();
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
@@ -28,13 +30,13 @@ public class UserProfileCommand implements BaseCommand {
         List<Product> productList1 = new ArrayList<>();
         List<Product> productList2 = new ArrayList<>();
         try {
-            productList1.add(CRUDUtils.getProductById(1));
-            productList1.add(CRUDUtils.getProductById(2));
-            productList1.add(CRUDUtils.getProductById(3));
-            productList1.add(CRUDUtils.getProductById(4));
-            productList2.add(CRUDUtils.getProductById(3));
-            productList2.add(CRUDUtils.getProductById(1));
-        } catch (DBConnectionException | ExecuteQueryException e) {
+            productList1.add(productService.findById(1));
+            productList1.add(productService.findById(2));
+            productList1.add(productService.findById(3));
+            productList1.add(productService.findById(4));
+            productList2.add(productService.findById(3));
+            productList2.add(productService.findById(1));
+        } catch (DBConnectionException e) {
             log.error(e.getMessage());
         }
 

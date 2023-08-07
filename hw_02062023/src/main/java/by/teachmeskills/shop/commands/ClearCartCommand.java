@@ -2,7 +2,7 @@ package by.teachmeskills.shop.commands;
 
 import by.teachmeskills.shop.enums.PagesPathEnum;
 import by.teachmeskills.shop.exceptions.CommandException;
-import by.teachmeskills.shop.model.Cart;
+import by.teachmeskills.shop.entities.Cart;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 

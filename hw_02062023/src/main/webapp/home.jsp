@@ -43,7 +43,7 @@
             <c:forEach items="${categories}" var="category">
                 <div class="card w-25 m-1" type="category">
                     <div class="card-body">
-                        <a href="eshop?command=category-redirect&name=${category.getName()}"
+                        <a href="eshop?command=category-redirect&id=${category.getId()}"
                            style="text-decoration:none;color:inherit">${category.getName()}</a>
                     </div>
                 </div>

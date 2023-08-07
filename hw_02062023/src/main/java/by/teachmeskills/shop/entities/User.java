@@ -1,16 +1,18 @@
-package by.teachmeskills.shop.model;
+package by.teachmeskills.shop.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.util.List;
 
-@Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
-@ToString
-public class User {
+@Data
+@SuperBuilder
+public class User extends BaseEntity {
     private String name;
     private String surname;
     private LocalDate birthDate;

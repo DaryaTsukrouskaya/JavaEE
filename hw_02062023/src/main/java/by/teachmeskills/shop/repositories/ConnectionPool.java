@@ -1,4 +1,4 @@
-package by.teachmeskills.shop.utils;
+package by.teachmeskills.shop.repositories;
 
 import by.teachmeskills.shop.exceptions.DBConnectionException;
 

@@ -34,14 +34,14 @@
             </div>
         </div>
     </nav>
-</header>
+</header> 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var="cart" value="${cart}"/>
 <c:forEach items="${cart.getProducts()}" var="product">
     <div class="card mb-3" style="max-width: 540px;margin:10px;">
         <div class="row g-0">
             <div class="col-md-4">
-                <img src="${contextPath}/images/${product.getImageName()}" class="img-fluid rounded-start"
+                <img src="${contextPath}/images/${product.getImagePath()}" class="img-fluid rounded-start"
                      alt="Card image">
             </div>
             <div class="col-md-8">

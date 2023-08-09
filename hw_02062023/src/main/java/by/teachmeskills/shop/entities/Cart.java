@@ -1,4 +1,4 @@
-package by.teachmeskills.shop.model;
+package by.teachmeskills.shop.entities;
 
 import java.util.ArrayList;
 import java.util.List;

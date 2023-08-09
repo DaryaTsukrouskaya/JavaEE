@@ -1,5 +1,5 @@
 package by.teachmeskills.shop.listener;
-import by.teachmeskills.shop.model.User;
+import by.teachmeskills.shop.entities.User;
 import jakarta.servlet.annotation.WebListener;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpSessionEvent;

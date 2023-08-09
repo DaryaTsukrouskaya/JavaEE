@@ -7,10 +7,14 @@ import by.teachmeskills.shop.exceptions.DBConnectionException;
 import by.teachmeskills.shop.exceptions.ExecuteQueryException;
 import by.teachmeskills.shop.exceptions.RequestParamNullException;
 import by.teachmeskills.shop.exceptions.UserAlreadyExistsException;
-import by.teachmeskills.shop.model.User;
-import by.teachmeskills.shop.utils.CRUDUtils;
+import by.teachmeskills.shop.entities.User;
+import by.teachmeskills.shop.services.CategoryService;
+import by.teachmeskills.shop.services.ProductService;
+import by.teachmeskills.shop.services.UserService;
+import by.teachmeskills.shop.services.impl.CategoryServiceImpl;
+import by.teachmeskills.shop.services.impl.ProductServiceImpl;
+import by.teachmeskills.shop.services.impl.UserServiceImpl;
 import by.teachmeskills.shop.utils.ValidatorUtils;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -19,6 +23,8 @@ import java.time.LocalDate;
 
 public class RegisterCommand implements BaseCommand {
     private final static Logger log = LogManager.getLogger(CategoryProductPageCommand.class);
+    private static final UserService userService = new UserServiceImpl();
+    private static final CategoryService categoryService = new CategoryServiceImpl();
 
     @Override
     public String execute(HttpServletRequest req) throws CommandException {
@@ -41,10 +47,10 @@ public class RegisterCommand implements BaseCommand {
         if (state.equals(State.VALID.getState())) {
             User user = new User(name, surname, birthDate, email, password);
             try {
-                CRUDUtils.createUser(user);
-                req.setAttribute("categories", CRUDUtils.getCategories());
+                userService.create(user);
+                req.setAttribute("categories", categoryService.read());
                 req.getSession().setAttribute("user", user);
-            } catch (DBConnectionException | ExecuteQueryException e) {
+            } catch (DBConnectionException e) {
                 log.error(e.getMessage());
             } catch (UserAlreadyExistsException e) {
                 req.setAttribute("state", e.getMessage());

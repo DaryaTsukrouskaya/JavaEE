@@ -37,4 +37,9 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getProductsByCategory(int id) throws DBConnectionException {
         return productRepository.getProductsByCategory(id);
     }
+
+    @Override
+    public List<Product> findProductsByKeywords(String words) throws DBConnectionException {
+        return productRepository.findProductsByKeywords(words);
+    }
 }

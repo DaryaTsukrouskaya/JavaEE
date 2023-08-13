@@ -25,6 +25,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     private static final String GET_ALL_PRODUCTS_QUERY = "SELECT * FROM products";
     private static final String GET_PRODUCT_QUERY = "SELECT * FROM products WHERE id=?";
     private static final String GET_CATEGORY_PRODUCTS_QUERY = "SELECT * FROM products WHERE categoryId=?";
+    private static final String GET_PRODUCTS_BY_KEYWORDS = "SELECT * FROM products WHERE name LIKE ? OR description LIKE ? ORDER BY name ASC";
 
     @Override
     public void create(Product product) throws DBConnectionException {
@@ -65,7 +66,7 @@ public class ProductRepositoryImpl implements ProductRepository {
             ResultSet set = statement.executeQuery();
             while (set.next()) {
                 productList.add(Product.builder().id(set.getInt("id")).name(set.getString("name"))
-                        .imagePath(set.getString("imagePath")).categoryId(set.getInt("categoryId")).
+                        .description(set.getString("description")).imagePath(set.getString("imagePath")).categoryId(set.getInt("categoryId")).
                         price(set.getBigDecimal("price")).build());
             }
         } catch (SQLException e) {
@@ -84,7 +85,7 @@ public class ProductRepositoryImpl implements ProductRepository {
             statement.setInt(1, id);
             ResultSet set = statement.executeQuery();
             set.next();
-            product = Product.builder().id(set.getInt("id")).name(set.getString("name"))
+            product = Product.builder().id(set.getInt("id")).name(set.getString("name")).description(set.getString("description"))
                     .imagePath(set.getString("imagePath")).categoryId(set.getInt("categoryId")).
                     price(set.getBigDecimal("price")).build();
         } catch (SQLException e) {
@@ -96,14 +97,39 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public List<Product> getProductsByCategory(int id)throws DBConnectionException {
+    public List<Product> getProductsByCategory(int id) throws DBConnectionException {
         List<Product> productList = new ArrayList<>();
         Connection connection = pool.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(GET_CATEGORY_PRODUCTS_QUERY)) {
-            statement.setInt(1,id);
+            statement.setInt(1, id);
             ResultSet set = statement.executeQuery();
             while (set.next()) {
                 productList.add(Product.builder().id(set.getInt("id")).name(set.getString("name"))
+                        .description(set.getString("description"))
+                        .imagePath(set.getString("imagePath")).categoryId(set.getInt("categoryId")).
+                        price(set.getBigDecimal("price")).build());
+            }
+        } catch (SQLException e) {
+            log.error(e.getMessage());
+        } finally {
+            pool.closeConnection(connection);
+        }
+        return productList;
+    }
+
+    @Override
+    public List<Product> findProductsByKeywords(String words) throws DBConnectionException {
+        List<Product> productList = new ArrayList<>();
+        Connection connection = pool.getConnection();
+        try (PreparedStatement statement = connection.prepareStatement(GET_PRODUCTS_BY_KEYWORDS)) {
+            words.trim();
+            words = "%" + words + "%";
+            statement.setString(1, words);
+            statement.setString(2, words);
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                productList.add(Product.builder().id(set.getInt("id")).name(set.getString("name"))
+                        .description(set.getString("description"))
                         .imagePath(set.getString("imagePath")).categoryId(set.getInt("categoryId")).
                         price(set.getBigDecimal("price")).build());
             }

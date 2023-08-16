@@ -4,6 +4,7 @@ import by.teachmeskills.shop.commands.AddProductToCartCommand;
 import by.teachmeskills.shop.commands.BaseCommand;
 import by.teachmeskills.shop.commands.CategoryProductPageCommand;
 import by.teachmeskills.shop.commands.ClearCartCommand;
+import by.teachmeskills.shop.commands.ProductsSearchCommand;
 import by.teachmeskills.shop.commands.RemoveProductFromCartCommand;
 import by.teachmeskills.shop.commands.HomePageCommand;
 import by.teachmeskills.shop.commands.RedirectToProductPageCommand;
@@ -35,6 +36,7 @@ public class CommandFactory {
         COMMAND_LIST.put(CommandsEnum.DELETE_PRODUCT_FROM_CART_COMMAND.getCommand(), new RemoveProductFromCartCommand());
         COMMAND_LIST.put(CommandsEnum.DELETE_ALL_PRODUCTS_FROM_CART_COMMAND.getCommand(), new ClearCartCommand());
         COMMAND_LIST.put(CommandsEnum.USER_PROFILE_COMMAND.getCommand(), new UserProfileCommand());
+        COMMAND_LIST.put(CommandsEnum.PRODUCTS_SEARCH_COMMAND.getCommand(), new ProductsSearchCommand());
     }
 
     public static BaseCommand defineCommand(HttpServletRequest request) {

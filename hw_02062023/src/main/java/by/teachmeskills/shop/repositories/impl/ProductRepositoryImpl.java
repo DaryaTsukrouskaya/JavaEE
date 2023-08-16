@@ -97,11 +97,11 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public List<Product> getProductsByCategory(int id) throws DBConnectionException {
+    public List<Product> getProductsByCategory(int categoryId) throws DBConnectionException {
         List<Product> productList = new ArrayList<>();
         Connection connection = pool.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(GET_CATEGORY_PRODUCTS_QUERY)) {
-            statement.setInt(1, id);
+            statement.setInt(1, categoryId);
             ResultSet set = statement.executeQuery();
             while (set.next()) {
                 productList.add(Product.builder().id(set.getInt("id")).name(set.getString("name"))

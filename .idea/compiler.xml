@@ -12,6 +12,7 @@
         <module name="servlet_hw_26052023" />
         <module name="paymentsystem" />
         <module name="hw_02062023" />
+        <module name="springMvc" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

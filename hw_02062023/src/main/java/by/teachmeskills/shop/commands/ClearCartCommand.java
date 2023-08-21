@@ -14,7 +14,6 @@ public class ClearCartCommand implements BaseCommand {
         Cart cart = (Cart) session.getAttribute("cart");
         cart.clear();
         session.setAttribute("cart", cart);
-        request.setAttribute("cartProductsList", cart.getProducts());
         return PagesPathEnum.CART_PAGE.getPath();
     }
 }

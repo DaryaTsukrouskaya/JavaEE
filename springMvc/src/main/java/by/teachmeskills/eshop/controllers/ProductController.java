@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/product")
 public class ProductController {
-    ProductService productService = new ProductServiceImpl();
+    private final ProductService productService = new ProductServiceImpl();
     private final Logger log = LogManager.getLogger(ProductController.class);
 
     @GetMapping("/{id}")

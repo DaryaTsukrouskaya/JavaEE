@@ -11,7 +11,7 @@ public interface UserService extends BaseService<User> {
 
     User findById(int id) throws ExecuteQueryException, DBConnectionException;
 
-    ModelAndView authenticate(String email);
+    ModelAndView authenticate(String email,String password);
 
     void updatePassword(String password,String email) throws DBConnectionException;
 

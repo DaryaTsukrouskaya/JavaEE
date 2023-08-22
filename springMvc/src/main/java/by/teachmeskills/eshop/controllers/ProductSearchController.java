@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/search")
 public class ProductSearchController {
-    private final static Logger log = LogManager.getLogger(ProductSearchController.class);
+    private final Logger log = LogManager.getLogger(ProductSearchController.class);
     private static final ProductService productService = new ProductServiceImpl();
 
     @GetMapping

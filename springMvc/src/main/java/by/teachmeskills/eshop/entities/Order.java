@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -17,15 +17,14 @@ import java.util.List;
 @SuperBuilder
 public class Order extends BaseEntity {
     private BigDecimal price;
-    private LocalDate orderDate;
+    private LocalDateTime orderDate;
     private int userId;
     private String address;
     private List<Product> products;
 
-    public Order(int id, LocalDate orderDate, List<Product> products) {
+    public Order(int id, LocalDateTime orderDate, List<Product> products) {
         this.id = id;
         this.orderDate = orderDate;
         this.products = products;
-
     }
 }

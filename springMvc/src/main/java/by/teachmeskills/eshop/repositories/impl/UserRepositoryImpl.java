@@ -20,7 +20,7 @@ public class UserRepositoryImpl implements UserRepository {
     private final static Logger log = LogManager.getLogger(UserRepositoryImpl.class);
     private final static String CREATE_USER_QUERY = "INSERT INTO users(name,surname,birthDate,email,password) VALUES(?,?,?,?,?)";
     private final static String GET_USER_BY_ID_QUERY = "SELECT * FROM users WHERE id=?";
-    private final static String GET_USER_BY_EMAIL_QUERY = "SELECT * FROM users WHERE email=?";
+    private final static String GET_USER_BY_EMAIL_AND_PASSWORD_QUERY = "SELECT * FROM users WHERE email=? AND password=?";
     private final static String DELETE_USER_QUERY = "DELETE FROM users WHERE id=?";
     private final static String GET_ALL_USERS_QUERY = "SELECT * FROM users";
     private final static String UPDATE_USER_PASSWORD_QUERY = "UPDATE users SET password=? WHERE email=?";
@@ -30,7 +30,7 @@ public class UserRepositoryImpl implements UserRepository {
     public void create(User user) throws DBConnectionException, UserAlreadyExistsException {
         Connection connection = pool.getConnection();
         try {
-            if (findByEmail(user.getEmail()) != null) {
+            if (findByEmailAndPassword(user.getEmail(), user.getPassword()) != null) {
                 throw new UserAlreadyExistsException("Такой пользователь уже существует!");
             }
         } catch (ExecuteQueryException e) {
@@ -101,10 +101,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findByEmail(String email) throws DBConnectionException, ExecuteQueryException {
+    public User findByEmailAndPassword(String email, String password) throws DBConnectionException, ExecuteQueryException {
         Connection connection = pool.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(GET_USER_BY_EMAIL_QUERY)) {
+        try (PreparedStatement statement = connection.prepareStatement(GET_USER_BY_EMAIL_AND_PASSWORD_QUERY)) {
             statement.setString(1, email);
+            statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             User user = User.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).surname(resultSet.getString("surname")).

@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/home")
 public class HomeController {
-    CategoryService categoryService = new CategoryServiceImpl();
+    private final CategoryService categoryService = new CategoryServiceImpl();
     private final Logger log = LogManager.getLogger(HomeController.class);
 
     @GetMapping

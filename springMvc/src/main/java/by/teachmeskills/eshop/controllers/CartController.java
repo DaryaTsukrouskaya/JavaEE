@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/cart")
 @SessionAttributes({"cart"})
 public class CartController {
-    ProductService productService = new ProductServiceImpl();
+    private final ProductService productService = new ProductServiceImpl();
     private final Logger log = LogManager.getLogger(CartController.class);
 
     @GetMapping
@@ -33,10 +33,9 @@ public class CartController {
 
     @GetMapping("/add")
     public ModelAndView addProductToCart(@RequestParam("product_id") int id, @ModelAttribute("cart") Cart cart) {
-        Product product = null;
         ModelMap modelMap = new ModelMap();
         try {
-            product = productService.findById(id);
+            Product product = productService.findById(id);
             cart.addProduct(product);
             modelMap.addAttribute("cart", cart);
             modelMap.addAttribute("product", product);

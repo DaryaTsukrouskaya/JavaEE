@@ -2,17 +2,15 @@ package by.teachmeskills.eshop.utils;
 
 import by.teachmeskills.eshop.enums.State;
 import by.teachmeskills.eshop.exceptions.RequestParamNullException;
+import lombok.experimental.UtilityClass;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Arrays;
 import java.util.Objects;
 
+@UtilityClass
 public class ValidatorUtils {
-    private ValidatorUtils() {
-
-    }
-
     private static final String REQUEST_PARAMETER_IS_NULL_ERROR = "Request parameter is not initialized!";
 
     public static State nameValidation(String name) {

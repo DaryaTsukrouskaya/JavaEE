@@ -12,14 +12,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 @SuperBuilder
+@NoArgsConstructor
 public class User extends BaseEntity {
     private String name;
     private String surname;
     private LocalDate birthDate;
     private String email;
     private String password;
-
-    public User() {
-
-    }
 }

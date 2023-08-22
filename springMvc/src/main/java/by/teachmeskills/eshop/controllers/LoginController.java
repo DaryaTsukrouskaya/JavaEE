@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 @SessionAttributes({"user"})
 @RequestMapping("/login")
 public class LoginController {
-    private static final UserService userService = new UserServiceImpl();
+    private final UserService userService = new UserServiceImpl();
 
     @GetMapping
     public ModelAndView openLoginPage() {
@@ -25,7 +25,7 @@ public class LoginController {
 
     @PostMapping
     public ModelAndView login(@ModelAttribute("user") User user) {
-        return userService.authenticate(user.getEmail());
+        return userService.authenticate(user.getEmail(), user.getPassword());
     }
 
     @ModelAttribute("user")

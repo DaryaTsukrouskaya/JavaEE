@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
-    ProductService productService = new ProductServiceImpl();
+    private final ProductService productService = new ProductServiceImpl();
     private final Logger log = LogManager.getLogger(CategoryController.class);
 
     @GetMapping("/{id}")

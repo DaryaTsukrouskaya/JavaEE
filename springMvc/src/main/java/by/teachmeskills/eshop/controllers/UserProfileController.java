@@ -17,13 +17,14 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/profile")
 public class UserProfileController {
-    ProductService productService = new ProductServiceImpl();
+    private final ProductService productService = new ProductServiceImpl();
     private final Logger log = LogManager.getLogger(UserProfileController.class);
 
     @GetMapping
@@ -43,8 +44,8 @@ public class UserProfileController {
             log.error(e.getMessage());
         }
 
-        Order order1 = new Order(1, LocalDate.now(), productList1);
-        Order order2 = new Order(2, LocalDate.now(), productList2);
+        Order order1 = new Order(1, LocalDateTime.now(), productList1);
+        Order order2 = new Order(2, LocalDateTime.now(), productList2);
         List<Order> userOrders = new ArrayList<>();
         userOrders.add(order1);
         userOrders.add(order2);

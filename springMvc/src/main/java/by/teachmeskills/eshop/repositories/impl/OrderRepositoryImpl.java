@@ -27,7 +27,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         Connection connection = pool.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(CREATE_ORDER_QUERY)) {
             statement.setBigDecimal(1, order.getPrice());
-            statement.setTimestamp(2, Timestamp.valueOf(order.getOrderDate().atStartOfDay()));
+            statement.setTimestamp(2, Timestamp.valueOf(order.getOrderDate()));
             statement.setInt(3, order.getUserId());
             statement.setString(4, order.getAddress());
             statement.execute();
@@ -60,7 +60,7 @@ public class OrderRepositoryImpl implements OrderRepository {
             ResultSet set = statement.executeQuery();
             while (set.next()) {
                 orderList.add(Order.builder().id(set.getInt("id")).price(set.getBigDecimal("price"))
-                        .orderDate(set.getTimestamp("birthDate").toLocalDateTime().toLocalDate()).userId(set.getInt("userId")).
+                        .orderDate(set.getTimestamp("birthDate").toLocalDateTime()).userId(set.getInt("userId")).
                         address(set.getString("address")).build());
             }
         } catch (SQLException e) {
@@ -80,7 +80,7 @@ public class OrderRepositoryImpl implements OrderRepository {
             ResultSet set = statement.executeQuery();
             set.next();
             order = Order.builder().id(set.getInt("id")).price(set.getBigDecimal("price"))
-                    .orderDate(set.getTimestamp("orderDate").toLocalDateTime().toLocalDate()).userId(set.getInt("userId")).
+                    .orderDate(set.getTimestamp("orderDate").toLocalDateTime()).userId(set.getInt("userId")).
                     address(set.getString("address")).build();
         } catch (SQLException e) {
             log.error(e.getMessage());
@@ -98,7 +98,7 @@ public class OrderRepositoryImpl implements OrderRepository {
             statement.setInt(1, id);
             ResultSet set = statement.executeQuery();
             orderList.add(Order.builder().id(set.getInt("id")).price(set.getBigDecimal("price")).
-                    orderDate(set.getTimestamp("orderDate").toLocalDateTime().toLocalDate()).
+                    orderDate(set.getTimestamp("orderDate").toLocalDateTime()).
                     userId(set.getInt("userId")).address(set.getString("address")).build());
         } catch (SQLException e) {
             throw new RuntimeException(e);

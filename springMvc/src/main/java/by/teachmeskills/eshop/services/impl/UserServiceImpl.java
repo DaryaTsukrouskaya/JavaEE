@@ -69,12 +69,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ModelAndView authenticate(String email) {
+    public ModelAndView authenticate(String email, String password) {
         ModelMap modelMap = new ModelMap();
         User user = null;
         if (email != null) {
             try {
-                user = userRepository.findByEmail(email);
+                user = userRepository.findByEmailAndPassword(email, password);
                 if (Optional.ofNullable(user).isPresent()) {
                     modelMap.addAttribute("user", user);
                     modelMap.addAttribute("categories", categoryRepository.read());

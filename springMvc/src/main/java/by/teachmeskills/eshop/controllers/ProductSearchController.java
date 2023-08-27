@@ -30,15 +30,6 @@ public class ProductSearchController {
 
     @PostMapping
     public ModelAndView searchResult(@RequestParam("keyWords") String keyWords) {
-        ModelMap modelMap = new ModelMap();
-        if (keyWords != null) {
-            try {
-                List<Product> products = productService.findProductsByKeywords(keyWords);
-                modelMap.addAttribute("products", products);
-            } catch (DBConnectionException e) {
-                log.error(e.getMessage());
-            }
-        }
-        return new ModelAndView(PagesPathEnum.SEARCH_PAGE.getPath(), modelMap);
+        return productService.findProductsByKeywords(keyWords);
     }
 }

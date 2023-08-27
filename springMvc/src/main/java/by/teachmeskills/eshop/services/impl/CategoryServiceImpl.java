@@ -1,16 +1,23 @@
 package by.teachmeskills.eshop.services.impl;
 
+import by.teachmeskills.eshop.controllers.CategoryController;
 import by.teachmeskills.eshop.entities.Category;
+import by.teachmeskills.eshop.enums.PagesPathEnum;
 import by.teachmeskills.eshop.exceptions.DBConnectionException;
 import by.teachmeskills.eshop.exceptions.UserAlreadyExistsException;
 import by.teachmeskills.eshop.repositories.CategoryRepository;
 import by.teachmeskills.eshop.repositories.impl.CategoryRepositoryImpl;
 import by.teachmeskills.eshop.services.CategoryService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 public class CategoryServiceImpl implements CategoryService {
     CategoryRepository categoryRepository = new CategoryRepositoryImpl();
+    private final Logger log = LogManager.getLogger(CategoryController.class);
 
     @Override
     public List<Category> read() throws DBConnectionException {
@@ -27,8 +34,19 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.delete(id);
     }
 
-    @Override
+
     public Category findById(int id) throws DBConnectionException {
         return categoryRepository.findById(id);
+    }
+
+    public ModelAndView returnCategoriesForHomePage() {
+        ModelMap modelMap = new ModelMap();
+        try {
+            modelMap.addAttribute("categories", categoryRepository.read());
+        } catch (DBConnectionException e) {
+            log.error(e.getMessage());
+        }
+        return new ModelAndView(PagesPathEnum.HOME_PAGE.getPath(), modelMap);
+
     }
 }

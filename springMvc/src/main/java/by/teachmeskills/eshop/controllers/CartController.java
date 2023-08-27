@@ -1,9 +1,7 @@
 package by.teachmeskills.eshop.controllers;
 
 import by.teachmeskills.eshop.entities.Cart;
-import by.teachmeskills.eshop.entities.Product;
 import by.teachmeskills.eshop.enums.PagesPathEnum;
-import by.teachmeskills.eshop.exceptions.DBConnectionException;
 import by.teachmeskills.eshop.services.ProductService;
 import by.teachmeskills.eshop.services.impl.ProductServiceImpl;
 import org.apache.log4j.LogManager;
@@ -21,45 +19,31 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/cart")
 @SessionAttributes({"cart"})
 public class CartController {
-    private final ProductService productService = new ProductServiceImpl();
     private final Logger log = LogManager.getLogger(CartController.class);
+    ProductService productService = new ProductServiceImpl();
 
     @GetMapping
     public ModelAndView openCartPage(@ModelAttribute("cart") Cart cart) {
         ModelMap modelMap = new ModelMap();
-        modelMap.addAttribute("cart", cart);
-        return new ModelAndView(PagesPathEnum.CART_PAGE.getPath(), modelMap);
+        return new ModelAndView(PagesPathEnum.CART_PAGE.getPath(), modelMap.addAttribute("cart", cart));
     }
 
     @GetMapping("/add")
-    public ModelAndView addProductToCart(@RequestParam("product_id") int id, @ModelAttribute("cart") Cart cart) {
-        ModelMap modelMap = new ModelMap();
-        try {
-            Product product = productService.findById(id);
-            cart.addProduct(product);
-            modelMap.addAttribute("cart", cart);
-            modelMap.addAttribute("product", product);
-        } catch (DBConnectionException e) {
-            log.error(e.getMessage());
-        }
-        return new ModelAndView(PagesPathEnum.PRODUCT_PAGE.getPath(), modelMap);
+    public ModelAndView addProduct(@RequestParam("product_id") int id, @ModelAttribute("cart") Cart cart) {
+        return productService.addProductToCart(id, cart);
 
     }
 
     @GetMapping("/delete")
     public ModelAndView deleteProductFromCart(@ModelAttribute("cart") Cart cart, @RequestParam("product_id") int id) {
-        ModelMap modelMap = new ModelMap();
-        cart.removeProduct(id);
-        modelMap.addAttribute("cart", cart);
-        return new ModelAndView(PagesPathEnum.CART_PAGE.getPath(), modelMap);
+        return productService.deleteProductFromCart(id, cart);
     }
 
     @GetMapping("/clear")
     public ModelAndView clearCart(@ModelAttribute("cart") Cart cart) {
         cart.clear();
         ModelMap modelMap = new ModelMap();
-        modelMap.addAttribute("cart", cart);
-        return new ModelAndView(PagesPathEnum.CART_PAGE.getPath(), modelMap);
+        return new ModelAndView(PagesPathEnum.CART_PAGE.getPath(), modelMap.addAttribute("cart", cart));
     }
 
     @ModelAttribute("cart")

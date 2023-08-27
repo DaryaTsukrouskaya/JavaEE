@@ -22,14 +22,6 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ModelAndView getProductPage(@PathVariable int id) {
-        ModelMap modelMap = new ModelMap();
-        try {
-            Product product = productService.findById(id);
-            modelMap.addAttribute("categoryName", product.getName());
-            modelMap.addAttribute("product", product);
-        } catch (DBConnectionException e) {
-            log.error(e.getMessage());
-        }
-        return new ModelAndView(PagesPathEnum.PRODUCT_PAGE.getPath(), modelMap);
+        return productService.findProductByIdForProductPage(id);
     }
 }

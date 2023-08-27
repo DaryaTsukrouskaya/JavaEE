@@ -17,17 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/home")
 public class HomeController {
-    private final CategoryService categoryService = new CategoryServiceImpl();
+    private final CategoryServiceImpl categoryService = new CategoryServiceImpl();
     private final Logger log = LogManager.getLogger(HomeController.class);
 
     @GetMapping
     public ModelAndView getHomePage() {
-        ModelMap modelMap = new ModelMap();
-        try {
-            modelMap.addAttribute("categories", categoryService.read());
-        } catch (DBConnectionException e) {
-            log.error(e.getMessage());
-        }
-        return new ModelAndView(PagesPathEnum.HOME_PAGE.getPath(), modelMap);
+        return categoryService.returnCategoriesForHomePage();
     }
 }

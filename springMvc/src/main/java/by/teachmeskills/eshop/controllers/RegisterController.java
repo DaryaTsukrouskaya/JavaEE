@@ -32,12 +32,7 @@ public class RegisterController {
 
     @PostMapping
     public ModelAndView registerUser(@ModelAttribute("user") User user, @RequestParam("repeatPassword") String repPass) {
-        try {
-            return userService.registerUser(user, repPass);
-        } catch (DBConnectionException | UserAlreadyExistsException e) {
-            log.error(e.getMessage());
-            return new ModelAndView(PagesPathEnum.REGISTER_PAGE.getPath(), new ModelMap().addAttribute("state", e.getMessage()));
-        }
+        return userService.registerUser(user, repPass);
     }
 
     @ModelAttribute("user")

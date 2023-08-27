@@ -7,6 +7,7 @@
     <title>${categoryName}</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -34,6 +35,15 @@
                     </li>
                 </ul>
             </div>
+            <form method="post" action="eshop?command=productsSearch">
+                <div class="input-group">
+                    <input type="search" id="keyWords" class="form-control" name="keyWords" placeholder="Поиск"/>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    </a>
+                </div>
+            </form>
         </div>
     </nav>
 </header>

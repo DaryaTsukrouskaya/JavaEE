@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
     ProductRepository productRepository = new ProductRepositoryImpl();
-    private final Logger log = LogManager.getLogger(CategoryController.class);
+    private final Logger log = LogManager.getLogger(CategoryServiceImpl.class);
 
     @Override
     public List<Product> read() throws DBConnectionException {

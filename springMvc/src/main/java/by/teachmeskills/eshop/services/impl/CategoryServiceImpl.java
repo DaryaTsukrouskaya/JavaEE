@@ -17,7 +17,7 @@ import java.util.List;
 
 public class CategoryServiceImpl implements CategoryService {
     CategoryRepository categoryRepository = new CategoryRepositoryImpl();
-    private final Logger log = LogManager.getLogger(CategoryController.class);
+    private final Logger log = LogManager.getLogger(CategoryServiceImpl.class);
 
     @Override
     public List<Category> read() throws DBConnectionException {

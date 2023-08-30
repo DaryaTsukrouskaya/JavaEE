@@ -60,7 +60,7 @@ public class OrderRepositoryImpl implements OrderRepository {
             ResultSet set = statement.executeQuery();
             while (set.next()) {
                 orderList.add(Order.builder().id(set.getInt("id")).price(set.getBigDecimal("price"))
-                        .orderDate(set.getTimestamp("birthDate").toLocalDateTime()).userId(set.getInt("userId")).
+                        .orderDate(set.getTimestamp("orderDate").toLocalDateTime()).userId(set.getInt("userId")).
                         address(set.getString("address")).build());
             }
         } catch (SQLException e) {

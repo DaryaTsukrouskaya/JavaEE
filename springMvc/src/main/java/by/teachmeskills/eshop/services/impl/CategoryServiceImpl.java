@@ -1,6 +1,5 @@
 package by.teachmeskills.eshop.services.impl;
 
-import by.teachmeskills.eshop.controllers.CategoryController;
 import by.teachmeskills.eshop.entities.Category;
 import by.teachmeskills.eshop.enums.PagesPathEnum;
 import by.teachmeskills.eshop.exceptions.DBConnectionException;

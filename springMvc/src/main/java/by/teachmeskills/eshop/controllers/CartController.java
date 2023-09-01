@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 @SessionAttributes({"cart"})
 public class CartController {
     private final Logger log = LogManager.getLogger(CartController.class);
-    ProductService productService = new ProductServiceImpl();
+    private final ProductService productService = new ProductServiceImpl();
 
     @GetMapping
     public ModelAndView openCartPage(@ModelAttribute("cart") Cart cart) {

@@ -39,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findById(id);
     }
 
-    public ModelAndView returnCategoriesForHomePage() {
+    public ModelAndView getCategoriesData() {
         ModelMap modelMap = new ModelMap();
         try {
             modelMap.addAttribute("categories", categoryRepository.read());

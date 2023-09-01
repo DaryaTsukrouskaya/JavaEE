@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 public class CategoryServiceImpl implements CategoryService {
-    CategoryRepository categoryRepository = new CategoryRepositoryImpl();
+    private final CategoryRepository categoryRepository = new CategoryRepositoryImpl();
     private final Logger log = LogManager.getLogger(CategoryServiceImpl.class);
 
     @Override

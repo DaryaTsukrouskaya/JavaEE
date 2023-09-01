@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
-    ProductRepository productRepository = new ProductRepositoryImpl();
+    private final ProductRepository productRepository = new ProductRepositoryImpl();
     private final Logger log = LogManager.getLogger(CategoryServiceImpl.class);
 
     @Override

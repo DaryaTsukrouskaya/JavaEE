@@ -29,8 +29,8 @@ import java.util.Map;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository = new UserRepositoryImpl();
-    private CategoryRepository categoryRepository = new CategoryRepositoryImpl();
+    private final UserRepository userRepository = new UserRepositoryImpl();
+    private final CategoryRepository categoryRepository = new CategoryRepositoryImpl();
     private final ProductService productService = new ProductServiceImpl();
     private final static Logger log = LogManager.getLogger(UserServiceImpl.class);
 

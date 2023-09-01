@@ -10,7 +10,7 @@ import by.teachmeskills.eshop.services.OrderService;
 import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
-    OrderRepository orderRepository = new OrderRepositoryImpl();
+    private final OrderRepository orderRepository = new OrderRepositoryImpl();
 
     @Override
     public List<Order> read() throws DBConnectionException {

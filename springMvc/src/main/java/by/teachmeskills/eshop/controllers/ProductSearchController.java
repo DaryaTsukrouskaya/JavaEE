@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/search")
 public class ProductSearchController {
     private final Logger log = LogManager.getLogger(ProductSearchController.class);
-    private static final ProductService productService = new ProductServiceImpl();
+    private final ProductService productService = new ProductServiceImpl();
 
     @GetMapping
     public ModelAndView getSearchPage() {

@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/profile")
 public class UserProfileController {
     private final Logger log = LogManager.getLogger(UserProfileController.class);
-    UserService userService = new UserServiceImpl();
+    private final UserService userService = new UserServiceImpl();
 
     @GetMapping
     public ModelAndView getUserPage(@SessionAttribute("user") User user) {

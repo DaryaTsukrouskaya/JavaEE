@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/register")
 public class RegisterController {
     private final Logger log = LogManager.getLogger(RegisterController.class);
-    private static final UserService userService = new UserServiceImpl();
+    private final UserService userService = new UserServiceImpl();
 
     @GetMapping
     public ModelAndView registerPage() {

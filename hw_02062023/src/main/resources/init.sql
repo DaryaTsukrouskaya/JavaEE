@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS eshop.users(
     password VARCHAR(20) NOT NULL,
     PRIMARY KEY(id),
     UNIQUE INDEX IDX_users_id_UNIQUE(id ASC),
-    UNIQUE INDEX IDX_users_email_UNIQUE(id ASC));
+    UNIQUE INDEX IDX_users_email_UNIQUE(email ASC));
 
 DROP TABLE IF EXISTS eshop.orders;
 CREATE TABLE IF NOT EXISTS eshop.orders(

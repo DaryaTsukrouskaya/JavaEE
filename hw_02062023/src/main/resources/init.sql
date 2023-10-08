@@ -3,9 +3,8 @@ CREATE SCHEMA IF NOT EXISTS eshop;
 
 DROP TABLE IF EXISTS eshop.categories;
 CREATE TABLE IF NOT EXISTS eshop.categories(
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(60) NOT NULL,
-    imagePath VARCHAR(100) NOT NULL,
+                                               id INT NOT NULL AUTO_INCREMENT,
+                                               name VARCHAR(60) NOT NULL,
     PRIMARY KEY(id),
     UNIQUE INDEX IDX_categories_id_UNIQUE(id ASC),
     UNIQUE INDEX IDX_categories_name_UNIQUE(name ASC));
@@ -13,8 +12,8 @@ CREATE TABLE IF NOT EXISTS eshop.categories(
 
 DROP TABLE IF EXISTS eshop.users;
 CREATE TABLE IF NOT EXISTS eshop.users(
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(20) NOT NULL,
+                                          id INT NOT NULL AUTO_INCREMENT,
+                                          name VARCHAR(20) NOT NULL,
     surname VARCHAR(20) NOT NULL,
     birthDate DATETIME NOT NULL,
     email VARCHAR(60) NOT NULL,
@@ -25,25 +24,25 @@ CREATE TABLE IF NOT EXISTS eshop.users(
 
 DROP TABLE IF EXISTS eshop.orders;
 CREATE TABLE IF NOT EXISTS eshop.orders(
-    id INT NOT NULL AUTO_INCREMENT,
-    price NUMERIC(20) NOT NULL,
+                                           id INT NOT NULL AUTO_INCREMENT,
+                                           price NUMERIC(20) NOT NULL,
     orderDate DATETIME NOT NUll,
     userId INT NOT NULL,
     address VARCHAR(60) NOT NULL,
     PRIMARY KEY(id),
     UNIQUE INDEX IDX_orders_id_UNIQUE(id ASC),
-    CONSTRAINT FK_orders_userId_users_id,
-    FOREIGN KEY(userId),
+    CONSTRAINT FK_orders_userId_users_id
+    FOREIGN KEY(userId)
     REFERENCES eshop.users (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
 DROP TABLE IF EXISTS eshop.products;
-CREATE TABLE IF NOT EXISTS eshop,products(
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(60) NOT NULL,
-    description VARCHAR NOT NULL,
-    imagePath VARCHAR NOT NULL,
+CREATE TABLE IF NOT EXISTS eshop.products(
+                                             id INT NOT NULL AUTO_INCREMENT,
+                                             name VARCHAR(60) NOT NULL,
+    description VARCHAR(500) NOT NULL,
+    imagePath VARCHAR(20) NOT NULL,
     categoryId INT NOT NULL,
     price DECIMAL(20) NOT NULL,
     PRIMARY KEY(id),
@@ -55,25 +54,24 @@ CREATE TABLE IF NOT EXISTS eshop,products(
     ON UPDATE CASCADE);
 DROP TABLE IF EXISTS eshop.orders_products;
 CREATE TABLE IF NOT EXISTS eshop.orders_products(
-    orderId INT NOT NULL ,
-    productId INT NOT NULL ,
-    quantity INT NOT NULL DEFAULT 0,
-    PRIMARY KEY (orderId,productId),
-    CONSTRAINT FK_orders_products_orderId_orders_id,
-    FOREIGN KEY (orderId),
+                                                    orderId INT NOT NULL ,
+                                                    productId INT NOT NULL ,
+                                                    quantity INT NOT NULL DEFAULT 0,
+                                                    PRIMARY KEY (orderId,productId),
+    CONSTRAINT FK_orders_products_orderId_orders_id
+    FOREIGN KEY (orderId)
     REFERENCES eshop.orders(id),
-    CONSTRAINT FK_orders_products_productId_products_id,
-    FOREIGN KEY (productId),
-    REFERENCES eshop.products(id),
-    ON DELETE CASCADE,
+    CONSTRAINT FK_orders_products_productId_products_id
+    FOREIGN KEY (productId)
+    REFERENCES eshop.products(id)
+    ON DELETE CASCADE
     ON UPDATE CASCADE);
-);
 INSERT INTO eshop.categories(name) VALUES("Бюстгалтеры");
 INSERT INTO eshop.categories(name) VALUES("Трусики");
 INSERT INTO eshop.categories(name) VALUES("Трикотаж");
 INSERT INTO eshop.categories(name) VALUES("Пижамы");
-INSERT INTO shop.categories(name) VALUES("Колготки и чулки");
-INSERT INTO shop.categories(name) VALUES("Носки");
+INSERT INTO eshop.categories(name) VALUES("Колготки и чулки");
+INSERT INTO eshop.categories(name) VALUES("Носки");
 
 INSERT INTO eshop.products(name,description,imagePath,categoryId,price) VALUES("Балконет","Бюстгалтер Балконет из Ультратонкой Микрофибры ","balkonet.png",1,2999);
 INSERT INTO eshop.products(name,description,imagePath,categoryId,price) VALUES("Треугольник","Бюстгальтер Треугольной Формы Emma Feeling Beautiful","triangle.png",1,2999);
